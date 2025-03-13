@@ -10,4 +10,4 @@ This project investigates how **commemorative narratives** evolve in **social me
 - **Discourse Function Analysis**: Assessing epistemic, ethical, ideological, and democratic aspects.
 - **Embedding Clustering and Multiple Factor Analysis**: Using **MFA + HDBSCAN** to identify patterns in narratives.
 
-The pipeline is designed for **Colab execution**, ensuring accessibility without requiring local installations.
+The pipeline is designed for **Colab & R execution**, ensuring accessibility without requiring local installations.
