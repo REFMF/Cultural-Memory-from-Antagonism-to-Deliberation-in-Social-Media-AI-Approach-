@@ -1,0 +1,156 @@
+# Load necessary libraries
+install.packages("proxy", dependencies = TRUE)  # Ensure proxy package is installed
+install.packages("gridExtra")  # For side-by-side plotting
+library(FactoMineR)   # MFA
+library(factoextra)   # MFA Visualization
+library(readxl)       # Read Excel files
+library(tcltk)        # File selection
+library(ggplot2)      # Visualization
+library(writexl)      # Save results
+library(dbscan)       # HDBSCAN clustering
+library(umap)         # UMAP for visualization
+library(ggrepel)      # Avoid overlapping labels
+library(proxy)        # Compute cosine distance
+library(gridExtra)    # Arrange multiple plots
+
+# Step 1: Load the dataset
+file_path <- tk_choose.files(caption = "Select the dataset file", 
+                             filters = matrix(c("Excel files", ".xlsx"), 1, 2, byrow = TRUE))
+data <- read_excel(file_path)
+
+# Step 2: Clean column names to avoid errors
+colnames(data) <- trimws(colnames(data))
+
+# Ensure correct column names
+expected_cols <- c("Subject_Actant", "Object_Actant", "Helper_Actant", 
+                   "Opponent_Actant", "Sender_Actant", "Receiver_Actant", "Antagonism Score1")
+
+missing_cols <- setdiff(expected_cols, colnames(data))
+
+if (length(missing_cols) > 0) {
+  stop(paste("The following expected columns are missing:", paste(missing_cols, collapse=", ")))
+}
+
+# Step 3: Select Actant variables and Antagonism Score
+actant_vars <- data[, c("Subject_Actant", "Object_Actant", "Helper_Actant", 
+                         "Opponent_Actant", "Sender_Actant", "Receiver_Actant")]
+
+# Ensure Antagonism Score1 is numeric
+data$`Antagonism Score1` <- as.numeric(data$`Antagonism Score1`)
+
+# Step 4: Prepare data for MFA
+mfa_data <- data.frame(actant_vars, Antagonism_Score1 = data$`Antagonism Score1`)
+
+# Step 5: Run MFA with 10 dimensions
+ncp_to_calculate <- 10
+mfa_result <- MFA(mfa_data, 
+                  group = c(ncol(actant_vars), 1), 
+                  type = c("n", "s"), 
+                  name.group = c("Actant Structure", "Antagonism Score"), 
+                  ncp = ncp_to_calculate)
+
+# Step 6: Calculate Variance Explained
+variance_explained <- mfa_result$eig[1:ncp_to_calculate, 2]
+cumulative_variance <- cumsum(variance_explained)
+
+cat("Variance Explained by Each Dimension:\n", variance_explained, "\n")
+cat("Cumulative Variance Explained:\n", cumulative_variance, "\n")
+
+# Step 7: Scree Plot
+fviz_screeplot(mfa_result, addlabels = TRUE, ylim = c(0, 100)) +
+  labs(title = "Scree Plot of MFA Dimensions", 
+       y = "Percentage of Variance Explained", 
+       x = "Dimensions")
+
+# Step 8: Extract MFA results
+mfa_coords <- as.data.frame(mfa_result$ind$coord[, 1:ncp_to_calculate])
+colnames(mfa_coords) <- paste0("Dim.", 1:ncp_to_calculate)
+mfa_coords$Antagonism_Score <- mfa_data$Antagonism_Score1
+
+# Step 9: Compute Cosine Distance
+cosine_dist <- as.matrix(proxy::dist(mfa_coords[, 1:ncp_to_calculate], method = "cosine"))
+cosine_dist <- as.dist(cosine_dist)
+
+# Step 10: Run HDBSCAN on Full Dataset
+hdbscan_result <- hdbscan(cosine_dist, 
+                          minPts = 5,        
+                          gen_hdbscan_tree = TRUE,  
+                          gen_simplified_tree = TRUE)  
+cat("HDBSCAN was run using Cosine Distance.\n")
+
+# Assign Cluster Labels from First HDBSCAN Run
+mfa_coords$Cluster_HDBSCAN_1 <- as.factor(hdbscan_result$cluster)
+
+# Step 11: Print Average Antagonism Score for Each Cluster in First HDBSCAN Run
+cat("\nMean Antagonism Score for Each Cluster (First HDBSCAN):\n")
+cluster_means_hdbscan_1 <- aggregate(Antagonism_Score ~ Cluster_HDBSCAN_1, data = mfa_coords, mean)
+print(cluster_means_hdbscan_1)
+
+# Step 12: Extract Outliers and Re-Cluster Them
+outliers <- mfa_coords[mfa_coords$Cluster_HDBSCAN_1 == "0", ]
+
+if (nrow(outliers) > 5) {  # Ensures there are enough points for clustering
+    cat("Running HDBSCAN again on extracted outliers...\n")
+
+    # Compute Cosine Distance for Outliers
+    outliers_dist <- as.matrix(proxy::dist(outliers[, 1:ncp_to_calculate], method = "cosine"))
+    outliers_dist <- as.dist(outliers_dist)
+
+    # Run HDBSCAN Again on Outliers
+    hdbscan_outliers_result <- hdbscan(outliers_dist, minPts = 3)
+
+    # Assign Cluster Labels to Outliers
+    outliers$Cluster_HDBSCAN_2 <- as.factor(hdbscan_outliers_result$cluster)
+
+    # Merge Outliers Back Correctly
+    mfa_coords$Cluster_HDBSCAN_2 <- NA
+    mfa_coords$Cluster_HDBSCAN_2[mfa_coords$Cluster_HDBSCAN_1 == "0"] <- outliers$Cluster_HDBSCAN_2
+
+    # Step 13: Print Average Antagonism Score for Each Cluster in Second HDBSCAN Run
+    cat("\nMean Antagonism Score for Each Cluster (Second HDBSCAN on Outliers):\n")
+    cluster_means_hdbscan_2 <- aggregate(Antagonism_Score ~ Cluster_HDBSCAN_2, data = mfa_coords, mean)
+    print(cluster_means_hdbscan_2)
+} else {
+    cat("Not enough outliers for re-clustering. Skipping step.\n")
+}
+
+# Step 14: Save Fixed Dataset
+save_folder <- tk_choose.dir(caption = "Select folder to save the file")
+if (is.na(save_folder) || save_folder == "") stop("No valid folder selected.")
+
+output_file <- file.path(save_folder, "Final_MFA_HDBSCAN_Reclustered_Outliers.xlsx")
+write_xlsx(mfa_coords, output_file)
+cat("Final dataset saved to:", output_file, "\n")
+
+# Step 15: Ensure All Plots Show Correct Clusters & Antagonism Scores
+
+# ✅ First HDBSCAN Clustering Plot (Main Data)
+p1 <- ggplot(mfa_coords, aes(x = Dim.1, y = Dim.2)) +
+  geom_point(aes(color = Antagonism_Score, shape = Cluster_HDBSCAN_1), size = 3) +
+  geom_point(data = subset(mfa_coords, Cluster_HDBSCAN_1 == "0"), 
+             aes(x = Dim.1, y = Dim.2), color = "black", size = 1.5) +  
+  geom_text_repel(aes(label = Cluster_HDBSCAN_1), max.overlaps = Inf) +  
+  labs(title = "HDBSCAN Clustering (First Run)",
+       x = "MFA Dimension 1",
+       y = "MFA Dimension 2") +
+  scale_color_gradient(low = "blue", high = "red") +
+  theme_minimal()
+
+print(p1)
+Sys.sleep(5)
+
+# ✅ Second HDBSCAN Clustering Plot (Re-Clustering of Outliers)
+if (!all(is.na(mfa_coords$Cluster_HDBSCAN_2))) {
+    dev.new()
+    p2 <- ggplot(mfa_coords, aes(x = Dim.1, y = Dim.2)) +
+      geom_point(aes(color = Antagonism_Score, shape = Cluster_HDBSCAN_2), size = 3) +
+      geom_text_repel(aes(label = Cluster_HDBSCAN_2), max.overlaps = Inf) +  
+      labs(title = "HDBSCAN Clustering (Outlier Re-Clustering)",
+           x = "MFA Dimension 1",
+           y = "MFA Dimension 2") +
+      scale_color_gradient(low = "blue", high = "red") +
+      theme_minimal()
+
+    print(p2)
+    Sys.sleep(5)
+}
