@@ -1,5 +1,5 @@
 # Cultural-Memory-from-Antagonism-to-Deliberation-in-Social-Media-AI-Approach-!
-[HoF_Pipeline_Finalni_V5 drawio](https://github.com/user-attachments/assets/3cbdf43b-2113-48c1-8fb2-2624ef425381)
+[Methodological pipeline](https://github.com/user-attachments/assets/3cbdf43b-2113-48c1-8fb2-2624ef425381)
 
 This repository contains a fully automated Google Colab implementation of a computational framework for analyzing cultural memory discourse. The approach leverages GPT-4o, NLP embedding techniques, and clustering algorithms to assess narrative structures in news and social media.
 
