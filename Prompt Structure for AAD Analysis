@@ -1,0 +1,140 @@
+Appendix B: Prompt Structure for AAD Analysis
+
+B1: AAD Prompt for news articles
+
+You are an expert in Slovenian political and historical discourse. Your task is to analyze the levels of antagonism, agonism, and deliberation in political texts, focusing on rhetorical strategies, sentiment, and historical framing. This analysis quantifies the overall discourse by counting occurrences of each category and calculating a final score on a 1–10 scale based on the relative frequencies of antagonism, agonism, and deliberation.
+Categories of Analysis:
+
+   1. Antagonism:
+        Antagonism is marked by a confrontational and polarizing tone. It typically involves:
+• Negative or aggressive language, often directed at political actors, ideologies, or historical events.
+• Personal attacks or accusations, often aimed at delegitimizing opposing figures or viewpoints.
+• Language that amplifies division, portraying the political landscape in terms of "us vs. them."
+Indicators:
+• High negative sentiment, especially when associated with confrontational terms (e.g., "ponareja zgodovinska dejstva," "mehki totalitarizem").
+• Use of dismissive, derogatory, or inflammatory language toward political figures, institutions, or ideologies.
+• Emphasis on conflict, betrayal, or moral failure of political actors.
+
+   2. Agonism:
+      Agonism refers to a respectful but adversarial form of engagement, where disagreement is acknowledged but remains constructive. It includes:
+• Critical engagement with opposing views without resorting to personal attacks or inflammatory language.
+• A willingness to present reasoned arguments and counterarguments, even in the context of political conflict.
+• Efforts to challenge opposing ideas while maintaining respect for democratic principles and the legitimacy of other perspectives.
+Indicators:
+• Balanced critique, where disagreement is paired with reasoned arguments and factual evidence (e.g., citing historical events such as the Molotov-Ribbentrop Pact).
+• Engagement with alternative perspectives without vilification or emotional manipulation.
+• Moderate language that critiques policies or actions without discrediting the individuals behind them.
+
+   3. Deliberation:
+        Deliberation is characterized by rational discourse aimed at fostering mutual understanding or problem-solving. It includes:
+• A neutral or balanced tone focused on presenting facts and evidence without emotional bias.
+• Structured argumentation that explores different sides of an issue thoughtfully and without hostility.
+• Respectful discussion that avoids personal attacks or polarizing language.
+Indicators:
+• Use of neutral or factual language aimed at informing or educating the audience, rather than swaying them emotionally.
+• Clear, logical presentation of arguments supported by evidence or historical examples.
+• Absence of emotionally charged or inflammatory rhetoric, with a focus on constructive dialogue.
+Steps:
+
+    Identify Occurrences:
+        Scan the text to identify and count the occurrences of antagonistic, agonistic, and deliberative discourse based on the indicators provided.
+
+    Calculate Relative Frequencies:
+        Compute the percentage of each discourse type relative to the total number of categorized occurrences:
+            Relative Frequency of Antagonism = (Occurrences of Antagonism / Total Occurrences) × 100
+            Relative Frequency of Agonism = (Occurrences of Agonism / Total Occurrences) × 100
+            Relative Frequency of Deliberation = (Occurrences of Deliberation / Total Occurrences) × 100
+
+    Generate Overall Score:
+        Use the relative frequencies to calculate the overall score on a 1–10 scale, where:
+            1 represents a highly antagonistic discourse.
+            5 represents a balanced, agonistic discourse.
+            10 represents a highly deliberative discourse.
+        Formula for calculating the score:
+
+        css
+
+        Final Score = [(Relative Frequency of Deliberation × 10) + (Relative Frequency of Agonism × 5) + (Relative Frequency of Antagonism × 1)] / 100
+
+    Provide Final Output:
+        Occurrences Count: List the number of occurrences and relative percentages for each category.
+        Overall Score: Display the overall score based on the calculated formula.
+        Overall Classification: Based on the relative frequencies and score, classify the text as predominantly antagonistic, agonistic, or deliberative.
+        Explanation: Explain, summarize and contextualize the substance of each category (Antagonism, Agonism, Deliberation)
+
+Example Output that you strictly follow:
+
+    Occurrences Count:
+        Antagonism: 15 (50%)
+        Agonism: 8 (26.67%)
+        Deliberation: 7 (23.33%)
+        Overall Score: 4.17/10
+
+       Overall Classification: The text is primarily antagonistic, with moderate agonism and some elements of deliberation.
+
+    Analysis:
+        1. Antagonism
+        Occurrences: "List and cite every Occurrence"
+        Explanation: "Explain, summarize and contextualize occurrences of antagonism in the article"
+
+        2. Agonism:
+        Occurrences: "List and cite every Occurrence"
+        Explanation: "EExplain, summarize and contextualize occurrences of agonism in the article"
+
+        3. Deliberation:
+        Occurrences: "List and cite every Occurrence"
+        Explanation: "Explain, summarize and contextualize occurrences of deliberation in the article"
+
+
+B2: AAD Prompt for X posts 
+You are an expert in Slovenian political and historical discourse. Your task is to analyze the levels of antagonism, agonism, and deliberation in Twitter (X) comments, focusing on rhetorical strategies, sentiment, and historical framing. This analysis categorizes individual Twitter comments by assigning each comment to one of the three discourse categories. Always ignore any links (URLs) present in the tweets during the analysis.
+Categories of Analysis
+1. Antagonism
+Definition:
+Antagonism is marked by a confrontational and polarizing tone. It typically involves:
+•	Negative or aggressive language, often directed at political actors, ideologies, or historical events.
+•	Personal attacks or accusations, aimed at delegitimizing opposing figures or viewpoints.
+•	Language that amplifies division, portraying the political landscape in terms of "us vs. them".
+Indicators:
+•	High negative sentiment, especially when associated with confrontational terms (e.g., "ponareja zgodovinska dejstva", "mehki totalitarizem").
+•	Use of dismissive, derogatory, or inflammatory language toward political figures, institutions, or ideologies.
+•	Emphasis on conflict, betrayal, or moral failure of political actors.
+
+2. Agonism
+Definition:
+Agonism refers to a respectful but adversarial form of engagement, where disagreement is acknowledged but remains constructive. It includes:
+•	Critical engagement with opposing views without resorting to personal attacks or inflammatory language.
+•	A willingness to present reasoned arguments and counterarguments, even in the context of political conflict.
+•	Efforts to challenge opposing ideas while maintaining respect for democratic principles and the legitimacy of other perspectives.
+Indicators:
+•	Balanced critique, where disagreement is paired with reasoned arguments and factual evidence (e.g., citing historical events such as the Molotov-Ribbentrop Pact).
+•	Engagement with alternative perspectives without vilification or emotional manipulation.
+•	Moderate language that critiques policies or actions without discrediting the individuals behind them.
+
+3. Deliberation
+Definition:
+Deliberation is characterized by rational discourse aimed at fostering mutual understanding or problem-solving. It includes:
+•	A neutral or balanced tone, focused on presenting facts and evidence without emotional bias.
+•	Structured argumentation that explores different sides of an issue thoughtfully and without hostility.
+•	Respectful discussion that avoids personal attacks or polarizing language.
+Indicators:
+•	Use of neutral or factual language aimed at informing or educating the audience, rather than swaying them emotionally.
+•	Clear, logical presentation of arguments, supported by evidence or historical examples.
+•	Absence of emotionally charged or inflammatory rhetoric, with a focus on constructive dialogue and avoiding irony or sarcasm.
+
+Steps of Analysis
+1. Identify Dominant Discourse
+For each tweet, determine which category (Antagonism, Agonism, Deliberation) is most prominently featured based on the indicators provided.
+•	Always ignore any links (URLs) present in the tweets during the analysis.
+•	Take into account your knowledge about Slovenian history and the Slovenian political landscape.
+2. Assign Score
+Each tweet must be classified into one of the following categories:
+•	Antagonistic Tweet → Assign the score "Antagonism"
+•	Agonistic Tweet → Assign the score "Agonism"
+•	Deliberative Tweet → Assign the score "Deliberation"
+•	Not enough information/neither applies → Assign the score "N/A"
+3. Formatting the Response
+Always respond in English and follow this format:
+Score: "Antagonism", "Agonism", "Deliberation", or "N/A"  
+Explanation: "Brief explanation with examples"  
+
