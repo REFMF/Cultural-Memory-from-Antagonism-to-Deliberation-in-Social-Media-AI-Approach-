@@ -1,0 +1,42 @@
+Appendix C: Prompt Structure for Discourse Function Analysis
+Instruction for Analysis: As an expert in Slovenian culture, politics, history, and current events, analyze the text based on the following five goals. For each goal, assign a quantitative rating from 0 to 100 based on its prominence in the text. The Additional Parameter (Call to Action) should be rated separately based on the 0-100 scale.
+Goals for Analysis:
+ 
+1.	Epistemic Goals (Knowledge Production and Dissemination) – KNOWLEDGE
+Focuses on enhancing public understanding by making fact-based knowledge accessible and clearly presented. Texts with an epistemic focus support informed decision-making through reliable, straightforward information aimed at fostering sound public reasoning.
+2.	Ethical Goals (Fairness, Justice, and Moral Accountability) – VALUES
+Centers on promoting fairness, mutual respect, and moral responsibility in discourse. Texts with an ethical purpose build relationships based on respect and justice, demonstrate accountability, and encourage careful consideration of ethical standards in social interactions.
+3.	Political or Ideological Goals (Influence and Social Change) – IDEOLOGY
+Aims to actively support, question, or challenge political and social power structures and norms. Texts with an ideological purpose seek to shape societal values by advocating for, opposing, or transforming existing systems and beliefs.
+4.	Democratic Goals (Legitimacy, Inclusiveness, and Fair Representation) – DEMOCRACY
+Emphasizes the importance of inclusive participation, transparency, and fair representation in collective decision-making. Texts with a democratic purpose seek to ensure all voices are heard, strengthen legitimacy through diverse representation, and uphold accountability within democratic processes.
+5.	Additional Parameter: Call to Action (Influence and Engagement) – ACTION
+The goal is to promote and appeal for direct action or participation in social change or societal transformation by advocating for action – either by addressing the political, social or cultural sphere or addressing the public (audience) to act.
+ 
+Quantitative Scaling:
+ 
+Prominence (0-100) Scale for Each Goal:
+•	Rate each goal on a scale from 0 to 100 to indicate its prominence in the text, where 0 signifies no presence and 100 indicates an overarching, dominant focus. Use the following descriptions as guidance:
+o	0: No Presence – The goal is entirely absent from the text.
+o	1-10: Minimal Presence – The goal is nearly absent, with only the faintest mention or implication.
+o	11-20: Very Low Presence – The goal is barely present, referenced very briefly or implied without clear emphasis.
+o	21-30: Low Presence – The goal is present but weakly emphasized, mentioned in passing or without much depth.
+o	31-40: Below Average Presence – The goal is somewhat present but lacks prominence; it’s noticeable but not central.
+o	41-50: Moderate Presence – The goal is present and clearly noticeable, balanced with other elements but not dominant.
+o	51-60: Above Average Presence – The goal is evident and receives focused attention, though not the main focus.
+o	61-70: High Presence – The goal is a strong element, consistently emphasized, and stands out as one of the more prominent aspects.
+o	71-80: Very High Presence – The goal is a primary focus, thoroughly developed, and contributes substantially to the text’s purpose.
+o	81-90: Dominant Presence – The goal is central to the text, shaping its core message and receiving deep, sustained attention.
+o	91-100: Overarching Presence – The goal is the defining force in the text, highly detailed, and clearly the primary intent throughout.
+ 
+Note: Each prominence rating is independent, meaning scores for each goal should reflect its individual presence in the text without influencing or being influenced by the other ratings.
+ 
+Results Format:
+ 
+1.	Analysis and Explanation: Provide a brief summary explaining how each goal is reflected in the text, highlighting key points or themes that support the assigned scores.
+2.	Score List: Present the scores from highest to lowest, reordering the categories based on their scores. Always list ACTION at the bottom, separated by a line, and displayed in italics. Do not include any explanation; list scores only. Format as follows:
+ 
+KNOWLEDGE: (score)
+VALUES: (score)
+IDEOLOGY: (score)
+DEMOCRACY: (score)
